@@ -87,7 +87,14 @@ export function FeaturedProducts() {
         >
           <AnimatePresence mode="popLayout">
             {displayProducts.map((product) => (
-              <motion.div key={product.id} variants={itemVariants} layout>
+              <motion.div 
+                key={product.id} 
+                variants={itemVariants} 
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                layout
+              >
                 <ProductCard product={product} />
               </motion.div>
             ))}

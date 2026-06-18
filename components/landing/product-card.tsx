@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Star, ShoppingCart, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -13,18 +14,24 @@ interface ProductCardProps {
 export function ProductCard({ product }: ProductCardProps) {
   return (
     <motion.div
-      whileHover={{ y: -4, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group flex flex-col rounded-3xl bg-card border border-border shadow-sm overflow-hidden"
+      whileHover={{ y: -8, scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      className="group flex flex-col rounded-3xl bg-card border border-border shadow-sm hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative transition-all duration-300"
     >
-      <div className="relative aspect-[4/3] bg-muted/30 w-full overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
+      
+      <Link href={`/product/${product.id}`} className="absolute inset-0 z-10">
+        <span className="sr-only">View {product.title}</span>
+      </Link>
+      
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted/20">
         <Image
           src={product.imageUrl}
           alt={product.title}
           fill
-          className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-500 group-hover:scale-105"
+          className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
           <Button variant="secondary" size="icon" className="h-8 w-8 rounded-full shadow-md bg-card/90 hover:bg-card">
             <Heart className="h-4 w-4 text-muted-foreground hover:text-destructive transition-colors" />
             <span className="sr-only">Add to wishlist</span>
@@ -32,7 +39,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <div className="p-5 flex flex-col flex-1">
+      <div className="p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
         <div className="flex items-center gap-2 mb-3">
           <Image
             src={product.brandLogo}
@@ -60,7 +67,7 @@ export function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between pointer-events-auto">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-1">
                 <Star className="h-3.5 w-3.5 fill-primary text-primary" />
@@ -78,7 +85,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
             <Button
               size="icon"
-              className="h-8 w-8 rounded-full bg-foreground text-background hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm"
+              className="h-8 w-8 rounded-full bg-foreground text-background hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm z-20"
             >
               <ShoppingCart className="h-4 w-4" />
               <span className="sr-only">Add to cart</span>
