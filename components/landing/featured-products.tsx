@@ -4,16 +4,31 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductCard } from "./product-card";
-import { products } from "@/lib/data";
+import { products, categories as allCategories } from "@/lib/data";
 
-const categories = ["All", "Electronics", "Fashion", "Home", "Beauty"];
+const activeCategories = Array.from(new Set(products.map(p => p.category)));
+const categories = ["All", ...activeCategories];
 
 export function FeaturedProducts() {
   const [activeTab, setActiveTab] = useState("All");
 
-  const displayProducts = activeTab === "All" 
-    ? products 
-    : products.filter(p => p.category === activeTab || activeTab === "Electronics");
+  const displayProducts = (() => {
+    const filtered = activeTab === "All" 
+      ? products 
+      : products.filter(p => p.category === activeTab);
+      
+    const result: typeof products = [];
+    const counts: Record<string, number> = {};
+    
+    for (const p of filtered) {
+      if (!counts[p.category]) counts[p.category] = 0;
+      if (counts[p.category] < 3) {
+        result.push(p);
+        counts[p.category]++;
+      }
+    }
+    return result;
+  })();
 
   const containerVariants = {
     hidden: { opacity: 0 },
