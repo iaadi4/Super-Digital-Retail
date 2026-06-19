@@ -16,7 +16,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <motion.div
       whileHover={{ y: -8, scale: 1.03 }}
       transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="group flex flex-col rounded-3xl bg-card border border-border shadow-sm hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative transition-all duration-300"
+      className="group flex flex-col rounded-3xl bg-card border border-border shadow-sm hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative transition-shadow duration-300"
     >
       <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
       

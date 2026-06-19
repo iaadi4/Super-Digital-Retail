@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
 
@@ -99,10 +100,13 @@ export function Hero() {
             </motion.p>
             
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Button size="lg" className="rounded-full h-14 px-8 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25">
+              <Link 
+                href="/products" 
+                className="inline-flex shrink-0 items-center justify-center rounded-full h-14 px-8 text-base font-semibold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25 transition-all outline-none"
+              >
                 Start exploring
                 <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
+              </Link>
             </motion.div>
           </motion.div>
 

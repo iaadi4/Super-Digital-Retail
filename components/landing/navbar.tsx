@@ -38,10 +38,8 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "Shop", href: "#" },
-    { label: "Categories", href: "#" },
-    { label: "Deals", href: "#" },
-    { label: "Brands", href: "#" },
+    { label: "Shop", href: "/products" },
+    { label: "Categories", href: "/products" },
   ];
 
   return (
