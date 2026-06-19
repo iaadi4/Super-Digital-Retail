@@ -5,7 +5,7 @@ export function Footer() {
   return (
     <footer className="bg-[#15171D] text-slate-300 pt-20 pb-10">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 lg:gap-8 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-8 mb-16">
           
           <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-6 group inline-flex">
@@ -41,15 +41,6 @@ export function Footer() {
               <li><Link href="#" className="hover:text-primary transition-colors">Electronics</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Fashion & Apparel</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Daily Deals</Link></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-semibold mb-6">Account</h4>
-            <ul className="space-y-4 text-sm">
-              <li><Link href="#" className="hover:text-primary transition-colors">Login / Register</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">My Orders</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Track Package</Link></li>
             </ul>
           </div>
 

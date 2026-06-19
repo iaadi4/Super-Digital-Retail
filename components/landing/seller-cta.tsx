@@ -66,7 +66,7 @@ export function SellerCTA() {
             </Button>
           </motion.div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-2 gap-8 lg:pl-12">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 lg:pl-12">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -74,19 +74,8 @@ export function SellerCTA() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="flex flex-col gap-2"
             >
-              <Counter from={0} to={50} duration={2} suffix="k+" />
+              <Counter from={0} to={54380} duration={2} suffix="+" />
               <span className="text-slate-400 font-medium">Happy Customers</span>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col gap-2"
-            >
-              <Counter from={0} to={2.5} duration={2} suffix="M+" />
-              <span className="text-slate-400 font-medium">Products Available</span>
             </motion.div>
 
             <motion.div 
@@ -96,7 +85,7 @@ export function SellerCTA() {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="flex flex-col gap-2"
             >
-              <Counter from={0} to={150} duration={2} suffix="+" />
+              <Counter from={0} to={184} duration={2} suffix="+" />
               <span className="text-slate-400 font-medium">Premium Brands</span>
             </motion.div>
 

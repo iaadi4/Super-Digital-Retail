@@ -55,8 +55,11 @@ export function Hero() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
   };
 
-  const product1 = products[0];
-  const product2 = products[3];
+  const sortedProducts = [...products]
+    .filter(p => p.soldCount >= 1)
+    .sort((a, b) => b.rating - a.rating);
+  const product1 = sortedProducts[0] || products[0];
+  const product2 = sortedProducts[1] || products[1];
 
   return (
     <section 
@@ -145,7 +148,7 @@ export function Hero() {
                 <div className="bg-primary/20 p-1 rounded-full text-primary">
                   <Star className="h-4 w-4 fill-primary" />
                 </div>
-                <span className="font-bold text-sm">5.0</span>
+                <span className="font-bold text-sm">{product2.rating.toFixed(1)}</span>
               </motion.div>
 
               <motion.div
@@ -154,7 +157,7 @@ export function Hero() {
                 className="absolute bottom-1/4 right-0 z-30 bg-background text-foreground rounded-full px-4 py-2 shadow-lg border border-border flex items-center gap-2"
                 style={{ transform: "translateZ(70px)" }}
               >
-                <span className="font-bold text-sm">1,999+ sold</span>
+                <span className="font-bold text-sm">{product2.soldCount}+ sold</span>
                 <span className="text-xl">🔥</span>
               </motion.div>
 

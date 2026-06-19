@@ -81,13 +81,19 @@ export function Testimonials() {
                     </p>
 
                     <div className="flex items-center gap-4 mt-auto">
-                      <Image 
-                        src={t.avatar} 
-                        alt={t.name} 
-                        width={48} 
-                        height={48} 
-                        className="rounded-full bg-muted" 
-                      />
+                      {t.avatar ? (
+                        <Image 
+                          src={t.avatar} 
+                          alt={t.name} 
+                          width={48} 
+                          height={48} 
+                          className="rounded-full bg-muted object-cover" 
+                        />
+                      ) : (
+                        <div className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm tracking-wider shrink-0">
+                          {t.name.split(' ').map((n: string) => n[0]).join('')}
+                        </div>
+                      )}
                       <div>
                         <h4 className="font-semibold text-foreground">{t.name}</h4>
                         <p className="text-sm text-muted-foreground">

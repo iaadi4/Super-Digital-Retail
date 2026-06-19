@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "i.pravatar.cc",
       },
+      {
+        protocol: "https",
+        hostname: "rukmini1.flixcart.com",
+      },
+      {
+        protocol: "https",
+        hostname: "*.flixcart.com",
+      },
     ],
   },
 };

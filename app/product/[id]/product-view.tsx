@@ -87,16 +87,16 @@ export function ProductView({ product }: { product: Product }) {
 
             <motion.div variants={fadeInUp} className="flex items-end gap-4 mb-8 pb-8 border-b border-border">
               <span className="text-4xl lg:text-5xl font-bold text-primary">
-                ${product.salePrice.toLocaleString()}
+                ₹{product.salePrice.toLocaleString()}
               </span>
               {product.originalPrice > product.salePrice && (
                 <span className="text-xl text-muted-foreground line-through mb-1.5">
-                  ${product.originalPrice.toLocaleString()}
+                  ₹{product.originalPrice.toLocaleString()}
                 </span>
               )}
               {product.originalPrice > product.salePrice && (
                 <span className="mb-2 ml-2 px-3 py-1 text-sm font-bold bg-destructive/10 text-destructive rounded-full">
-                  Save ${((product.originalPrice - product.salePrice)).toLocaleString()}
+                  Save ₹{((product.originalPrice - product.salePrice)).toLocaleString()}
                 </span>
               )}
             </motion.div>
@@ -125,21 +125,17 @@ export function ProductView({ product }: { product: Product }) {
             )}
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row gap-4 mt-auto">
-              <Button size="lg" className="flex-1 h-14 text-lg rounded-2xl shadow-lg hover:shadow-xl transition-all relative overflow-hidden group">
-                <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:animate-[shimmer_1.5s_infinite]"></span>
-                <ShoppingCart className="mr-2 h-5 w-5" />
-                Add to Cart
-              </Button>
               {product.flipkartUrl && (
                 <a 
                   href={product.flipkartUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className={cn(
-                    buttonVariants({ variant: "outline", size: "lg" }),
-                    "flex-1 h-14 text-lg rounded-2xl border-2 border-[#2874f0] text-[#2874f0] hover:bg-[#2874f0] hover:text-white transition-all shadow-sm"
+                    buttonVariants({ variant: "default", size: "lg" }),
+                    "flex-1 h-14 text-lg rounded-2xl bg-[#2874f0] text-white hover:bg-[#2874f0]/95 transition-all shadow-lg hover:shadow-xl relative overflow-hidden group"
                   )}
                 >
+                  <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:animate-[shimmer_1.5s_infinite]"></span>
                   Buy on Flipkart
                   <ExternalLink className="ml-2 h-5 w-5" />
                 </a>
@@ -153,7 +149,7 @@ export function ProductView({ product }: { product: Product }) {
                 </div>
                 <div>
                   <div className="font-semibold">Free Delivery</div>
-                  <div className="text-xs text-muted-foreground">For orders over $50</div>
+                  <div className="text-xs text-muted-foreground">For orders over ₹500</div>
                 </div>
               </div>
               <div className="flex items-center gap-4">

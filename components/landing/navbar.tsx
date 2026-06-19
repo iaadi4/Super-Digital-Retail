@@ -21,6 +21,7 @@ import {
   SheetContent,
   SheetTrigger,
   SheetTitle,
+  SheetClose,
 } from "@/components/ui/sheet";
 
 export function Navbar() {
@@ -99,7 +100,7 @@ export function Navbar() {
             <Button
               variant="ghost"
               size="icon"
-              className="rounded-full hover:bg-muted"
+              className="rounded-full hover:bg-muted hidden sm:inline-flex"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <Search className="h-5 w-5" />
@@ -118,20 +119,6 @@ export function Navbar() {
             <span className="sr-only">Toggle theme</span>
           </Button>
 
-
-          <Button variant="ghost" size="icon" className="rounded-full hover:bg-muted relative">
-            <ShoppingCart className="h-5 w-5" />
-            <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 rounded-full bg-primary text-primary-foreground border-2 border-background">
-              3
-            </Badge>
-          </Button>
-
-
-          <Button className="hidden lg:inline-flex rounded-full bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
-            Login
-          </Button>
-
-
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger className="rounded-full inline-flex items-center justify-center whitespace-nowrap text-sm font-medium hover:bg-muted h-10 w-10 md:hidden">
@@ -141,14 +128,14 @@ export function Navbar() {
               <SheetContent>
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <div className="flex flex-col gap-6 mt-8">
-                  <Link href="/" className="flex items-center gap-2 mb-4">
+                  <SheetClose render={<Link href="/" className="flex items-center gap-2 mb-4" />}>
                     <div className="bg-primary text-primary-foreground p-1.5 rounded-xl">
                       <Zap className="h-5 w-5 fill-current" />
                     </div>
                     <span className="font-heading font-bold text-xl tracking-tight">
                       Super Digital.
                     </span>
-                  </Link>
+                  </SheetClose>
                   <div className="relative mb-2">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                     <Input
@@ -159,13 +146,17 @@ export function Navbar() {
                   </div>
                   <nav className="flex flex-col gap-4">
                     {navLinks.map((link) => (
-                      <Link
+                      <SheetClose
                         key={link.label}
-                        href={link.href}
-                        className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                        render={
+                          <Link
+                            href={link.href}
+                            className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                          />
+                        }
                       >
                         {link.label}
-                      </Link>
+                      </SheetClose>
                     ))}
                   </nav>
                   <div className="mt-auto flex flex-col gap-4">
@@ -182,10 +173,8 @@ export function Navbar() {
                         <>
                           <Moon className="h-5 w-5" /> Dark Mode
                         </>
-                      )}
-                    </Button>
-                    <Button className="w-full rounded-full h-12 bg-primary text-primary-foreground hover:bg-primary/90 font-medium">
-                      Login
+                      )
+                      }
                     </Button>
                   </div>
                 </div>

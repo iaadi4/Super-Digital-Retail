@@ -31,12 +31,6 @@ export function ProductCard({ product }: ProductCardProps) {
           fill
           className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
-          <Button variant="secondary" size="icon" className="h-8 w-8 rounded-full shadow-md bg-card/90 hover:bg-card">
-            <Heart className="h-4 w-4 text-muted-foreground hover:text-destructive transition-colors" />
-            <span className="sr-only">Add to wishlist</span>
-          </Button>
-        </div>
       </div>
 
       <div className="p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
@@ -60,10 +54,10 @@ export function ProductCard({ product }: ProductCardProps) {
         <div className="mt-auto">
           <div className="flex items-end gap-2 mb-3">
             <span className="text-lg font-bold text-primary">
-              ${product.salePrice.toLocaleString()}
+              ₹{product.salePrice.toLocaleString()}
             </span>
             <span className="text-sm text-muted-foreground line-through mb-[2px]">
-              ${product.originalPrice.toLocaleString()}
+              ₹{product.originalPrice.toLocaleString()}
             </span>
           </div>
 
@@ -82,14 +76,6 @@ export function ProductCard({ product }: ProductCardProps) {
                 {product.soldCount} sold
               </span>
             </div>
-
-            <Button
-              size="icon"
-              className="h-8 w-8 rounded-full bg-foreground text-background hover:bg-primary hover:text-primary-foreground transition-colors shadow-sm z-20"
-            >
-              <ShoppingCart className="h-4 w-4" />
-              <span className="sr-only">Add to cart</span>
-            </Button>
           </div>
         </div>
       </div>
