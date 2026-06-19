@@ -24,6 +24,7 @@ export function ProductGallery({ images, title }: { images: string[], title: str
               src={activeImage}
               alt={title}
               fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover mix-blend-multiply dark:mix-blend-normal"
               priority
             />

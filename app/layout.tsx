@@ -16,8 +16,22 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Super Digital Retail - Multi-Vendor Marketplace",
-  description: "Discover products from sellers who care.",
+  metadataBase: new URL("https://superdigitalretail.in"),
+  title: {
+    default: "Super Digital Retail — Discover the Best Deals on Flipkart",
+    template: "%s | Super Digital Retail",
+  },
+  description:
+    "Compare prices, read real ratings, and discover top products across Electronics, Home Decor, Kitchen, and more. Buy on Flipkart at the best prices.",
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    siteName: "Super Digital Retail",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

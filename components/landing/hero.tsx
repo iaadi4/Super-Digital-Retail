@@ -161,7 +161,7 @@ export function Hero() {
                 className="absolute bottom-1/4 right-0 z-30 bg-background text-foreground rounded-full px-4 py-2 shadow-lg border border-border flex items-center gap-2"
                 style={{ transform: "translateZ(70px)" }}
               >
-                <span className="font-bold text-sm">{product2.soldCount}+ sold</span>
+                <span className="font-bold text-sm">{product1.soldCount}+ sold</span>
                 <span className="text-xl">🔥</span>
               </motion.div>
 

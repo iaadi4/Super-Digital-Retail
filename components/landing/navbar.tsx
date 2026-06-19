@@ -39,7 +39,7 @@ export function Navbar() {
 
   const navLinks = [
     { label: "Shop", href: "/products" },
-    { label: "Categories", href: "/products" },
+    { label: "Categories", href: "/products#categories" },
   ];
 
   return (

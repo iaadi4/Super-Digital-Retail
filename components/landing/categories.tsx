@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { 
   Laptop, 
   Shirt, 
@@ -12,26 +12,33 @@ import {
   Sparkles, 
   PenTool, 
   ShoppingCart, 
-  BookOpen 
+  BookOpen,
+  Home,
+  Headphones,
+  type LucideIcon,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { products, getCategorySlug } from "@/lib/data";
 
-const categories = [
-  { name: "Electronics", icon: Laptop },
-  { name: "Clothes", icon: Shirt },
-  { name: "Bags", icon: Briefcase },
-  { name: "Food", icon: Utensils },
-  { name: "Furniture", icon: Sofa },
-  { name: "Baby Care", icon: Baby },
-  { name: "Beauty & Makeup", icon: Sparkles },
-  { name: "Stationery", icon: PenTool },
-  { name: "Grocery", icon: ShoppingCart },
-  { name: "Books", icon: BookOpen },
-];
+const categoryIcons: Record<string, LucideIcon> = {
+  Electronics: Laptop,
+  Clothes: Shirt,
+  Bags: Briefcase,
+  Food: Utensils,
+  Furniture: Sofa,
+  "Baby Care": Baby,
+  "Beauty & Makeup": Sparkles,
+  Stationery: PenTool,
+  Grocery: ShoppingCart,
+  Books: BookOpen,
+  "Home Decor": Home,
+  "Home & Kitchen": Utensils,
+  Accessories: Headphones,
+};
+
+// Only show categories that have products
+const activeCategories = Array.from(new Set(products.map((p) => p.category)));
 
 export function Categories() {
-  const [active, setActive] = useState("Electronics");
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -57,24 +64,18 @@ export function Categories() {
           viewport={{ once: true, margin: "-50px" }}
           className="flex overflow-x-auto pb-4 pt-2 hide-scrollbar gap-3 snap-x"
         >
-          {categories.map((category) => {
-            const Icon = category.icon;
-            const isActive = active === category.name;
+          {activeCategories.map((categoryName) => {
+            const Icon = categoryIcons[categoryName] || ShoppingCart;
             
             return (
-              <motion.div key={category.name} variants={itemVariants} className="snap-start shrink-0">
-                <Button
-                  variant={isActive ? "default" : "outline"}
-                  className={`rounded-full h-12 px-6 gap-2 transition-all duration-300 ${
-                    isActive 
-                      ? "bg-primary text-primary-foreground shadow-md hover:bg-primary/90" 
-                      : "bg-background text-foreground border-border hover:border-primary hover:text-primary hover:bg-primary/5"
-                  }`}
-                  onClick={() => setActive(category.name)}
+              <motion.div key={categoryName} variants={itemVariants} className="snap-start shrink-0">
+                <Link
+                  href={`/category/${getCategorySlug(categoryName)}`}
+                  className="rounded-full h-12 px-6 gap-2 transition-all duration-300 bg-background text-foreground border border-border hover:border-primary hover:text-primary hover:bg-primary/5 inline-flex items-center justify-center text-sm font-medium"
                 >
-                  <Icon className={`h-4 w-4 ${isActive ? "text-primary-foreground" : "text-muted-foreground"}`} />
-                  <span className="font-medium">{category.name}</span>
-                </Button>
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                  <span className="font-medium">{categoryName}</span>
+                </Link>
               </motion.div>
             );
           })}
@@ -93,3 +94,4 @@ export function Categories() {
     </section>
   );
 }
+

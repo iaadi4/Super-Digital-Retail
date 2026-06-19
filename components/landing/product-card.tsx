@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Star, ShoppingCart, Heart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Product } from "@/lib/data";
+import { Product, getProductSlug } from "@/lib/data";
 
 interface ProductCardProps {
   product: Product;
@@ -20,7 +20,7 @@ export function ProductCard({ product }: ProductCardProps) {
     >
       <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
       
-      <Link href={`/product/${product.id}`} className="absolute inset-0 z-10">
+      <Link href={`/products/${getProductSlug(product)}`} className="absolute inset-0 z-10">
         <span className="sr-only">View {product.title}</span>
       </Link>
       
@@ -29,23 +29,13 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.imageUrl}
           alt={product.title}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110"
         />
       </div>
 
       <div className="p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
-        <div className="flex items-center gap-2 mb-3">
-          <Image
-            src={product.brandLogo}
-            alt={product.brandName}
-            width={20}
-            height={20}
-            className="rounded-full bg-muted"
-          />
-          <span className="text-xs font-medium text-muted-foreground">
-            {product.brandName}
-          </span>
-        </div>
+
 
         <h3 className="font-heading font-semibold text-foreground line-clamp-2 mb-2">
           {product.title}
@@ -63,18 +53,28 @@ export function ProductCard({ product }: ProductCardProps) {
 
           <div className="flex items-center justify-between pointer-events-auto">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-primary text-primary" />
-                <span className="text-xs font-medium text-foreground">
-                  {product.rating}
+              {product.reviewsCount > 0 ? (
+                <>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5 fill-primary text-primary" />
+                    <span className="text-xs font-medium text-foreground">
+                      {product.rating.toFixed(1)}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      ({product.reviewsCount.toLocaleString()})
+                    </span>
+                  </div>
+                  {product.soldCount > 0 && (
+                    <span className="text-xs text-muted-foreground">
+                      {product.soldCount.toLocaleString()} sold
+                    </span>
+                  )}
+                </>
+              ) : (
+                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                  Newly listed
                 </span>
-                <span className="text-xs text-muted-foreground">
-                  ({product.reviewsCount})
-                </span>
-              </div>
-              <span className="text-xs text-muted-foreground">
-                {product.soldCount} sold
-              </span>
+              )}
             </div>
           </div>
         </div>
