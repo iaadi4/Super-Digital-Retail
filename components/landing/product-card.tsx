@@ -29,34 +29,34 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.imageUrl}
           alt={product.title}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110"
         />
       </div>
 
-      <div className="p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
+      <div className="p-3 sm:p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
 
 
-        <h3 className="font-heading font-semibold text-foreground line-clamp-2 mb-2">
+        <h3 className="font-heading font-semibold text-sm sm:text-base text-foreground line-clamp-2 mb-2">
           {product.title}
         </h3>
 
         <div className="mt-auto">
-          <div className="flex items-end gap-2 mb-3">
-            <span className="text-lg font-bold text-primary">
+          <div className="flex flex-wrap items-baseline gap-1 sm:gap-2 mb-2 sm:mb-3">
+            <span className="text-base sm:text-lg font-bold text-primary">
               ₹{product.salePrice.toLocaleString()}
             </span>
-            <span className="text-sm text-muted-foreground line-through mb-[2px]">
+            <span className="text-xs sm:text-sm text-muted-foreground line-through">
               ₹{product.originalPrice.toLocaleString()}
             </span>
           </div>
 
           <div className="flex items-center justify-between pointer-events-auto">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               {product.reviewsCount > 0 ? (
                 <>
                   <div className="flex items-center gap-1">
-                    <Star className="h-3.5 w-3.5 fill-primary text-primary" />
+                    <Star className="h-3 sm:h-3.5 w-3 sm:w-3.5 fill-primary text-primary" />
                     <span className="text-xs font-medium text-foreground">
                       {product.rating.toFixed(1)}
                     </span>
@@ -65,13 +65,13 @@ export function ProductCard({ product }: ProductCardProps) {
                     </span>
                   </div>
                   {product.soldCount > 0 && (
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-muted-foreground hidden sm:inline">
                       {product.soldCount.toLocaleString()} sold
                     </span>
                   )}
                 </>
               ) : (
-                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] sm:text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
                   Newly listed
                 </span>
               )}

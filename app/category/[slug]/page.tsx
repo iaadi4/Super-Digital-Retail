@@ -17,13 +17,7 @@ interface CategoryPageProps {
   }>;
 }
 
-export function generateStaticParams() {
-  return categories
-    .filter((cat) => products.some((p) => p.category === cat))
-    .map((cat) => ({
-      slug: getCategorySlug(cat),
-    }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -194,7 +188,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8 mb-16">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 mb-16">
             {categoryProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

@@ -4,6 +4,8 @@ import { FeaturedProducts } from "@/components/landing/featured-products";
 import { SellerCTA } from "@/components/landing/seller-cta";
 import { Testimonials } from "@/components/landing/testimonials";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",

@@ -9,11 +9,7 @@ interface ProductPageProps {
   }>;
 }
 
-export function generateStaticParams() {
-  return products.map((product) => ({
-    slug: getProductSlug(product),
-  }));
-}
+export const dynamic = "force-dynamic";
 
 function findProduct(slug: string) {
   const id = slug.split('-').pop();
