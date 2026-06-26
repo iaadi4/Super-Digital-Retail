@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ProductCard } from "@/components/landing/product-card";
 import { products, getActiveCategories } from "@/lib/data";
@@ -10,21 +10,32 @@ const activeCategories = getActiveCategories();
 
 function ProductsContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const searchQuery = searchParams.get("search") || "";
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const shouldReduceMotion = useReducedMotion();
 
+  const query = searchQuery.trim().toLowerCase();
+
   const filteredProducts = products.filter((p) => {
     const matchesCat =
-      selectedCategory === "All" || p.category === selectedCategory;
+      !query || selectedCategory === "All" || p.category === selectedCategory;
     const matchesSearch =
-      !searchQuery ||
-      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (p.description &&
-        p.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      !query ||
+      p.title.toLowerCase().includes(query) ||
+      (p.brandName && p.brandName.toLowerCase().includes(query)) ||
+      (p.category && p.category.toLowerCase().includes(query)) ||
+      (p.description && p.description.toLowerCase().includes(query)) ||
+      (p.features && p.features.some((f) => f.toLowerCase().includes(query)));
     return matchesCat && matchesSearch;
   });
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    if (searchQuery) {
+      router.push("/products");
+    }
+  };
 
   return (
     <div className="w-full font-body bg-[#FFFFFF]">
@@ -49,9 +60,9 @@ function ProductsContent() {
       {/* Filter Bar */}
       <div className="flex flex-nowrap items-center gap-2 overflow-x-auto pb-4 mb-12 scrollbar-hide">
         <button
-          onClick={() => setSelectedCategory("All")}
+          onClick={() => handleCategoryClick("All")}
           className={`rounded-full px-5 py-2 text-[13px] font-medium transition-colors border whitespace-nowrap cursor-pointer focus:outline-none ${
-            selectedCategory === "All"
+            !query && selectedCategory === "All"
               ? "bg-[#111111] text-white border-[#111111]"
               : "bg-white text-[#111111] border-[#E0E0E0] hover:bg-[#F7F9F8]"
           }`}
@@ -61,9 +72,9 @@ function ProductsContent() {
         {activeCategories.map((category) => (
           <button
             key={category}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() => handleCategoryClick(category)}
             className={`rounded-full px-5 py-2 text-[13px] font-medium transition-colors border whitespace-nowrap cursor-pointer focus:outline-none ${
-              selectedCategory === category
+              !query && selectedCategory === category
                 ? "bg-[#111111] text-white border-[#111111]"
                 : "bg-white text-[#111111] border-[#E0E0E0] hover:bg-[#F7F9F8]"
             }`}
