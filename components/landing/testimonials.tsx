@@ -20,7 +20,7 @@ export function Testimonials() {
   );
 
   return (
-    <section className="py-24 bg-background overflow-hidden">
+    <section className="pt-12 md:pt-16 pb-20 md:pb-24 bg-background border-t border-[#E0E0E0] overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div className="max-w-2xl">

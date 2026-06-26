@@ -2,14 +2,11 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import {
   products,
-  categories,
-  getProductSlug,
-  getCategorySlug,
   getCategoryFromSlug,
+  getProductSlug,
   categoryMeta,
 } from "@/lib/data";
-import { ProductCard } from "@/components/landing/product-card";
-import { Breadcrumbs } from "@/components/landing/breadcrumbs";
+import { CategoryClientView } from "./category-client";
 
 interface CategoryPageProps {
   params: Promise<{
@@ -47,7 +44,7 @@ export async function generateMetadata({
       ? ` Top-rated items score up to ${Math.max(...ratedProducts.map((p) => p.rating)).toFixed(1)}/5.`
       : "";
 
-  const description = `Shop ${categoryProducts.length} ${categoryName} products from ₹${priceRange.min.toLocaleString()} to ₹${priceRange.max.toLocaleString()}.${ratingInfo} Compare prices, features, and buy on Flipkart.`;
+  const description = `Shop ${categoryProducts.length} ${categoryName} products from ₹${priceRange.min.toLocaleString()} to ₹${priceRange.max.toLocaleString()}.${ratingInfo} Shop official Super Digital Retail products directly on Flipkart.`;
 
   return {
     title: `${categoryName} — Best Deals & Top Picks`,
@@ -74,11 +71,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const meta = categoryMeta[categoryName];
 
-  // Default FAQs if no category-specific ones exist
   const defaultFaqs = [
     {
       question: `What kind of ${categoryName} products do you offer?`,
-      answer: `We offer a curated selection of ${categoryProducts.length} ${categoryName} items carefully chosen from top Flipkart sellers for quality and value.`,
+      answer: `We offer a curated selection of ${categoryProducts.length} ${categoryName} items crafted and sold directly by Super Digital Retail on Flipkart.`,
     },
     {
       question: `How do I purchase ${categoryName} products from this site?`,
@@ -147,11 +143,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     })),
   };
 
-  const breadcrumbItems = [
-    { label: "Products", href: "/products" },
-    { label: categoryName },
-  ];
-
   return (
     <>
       <script
@@ -167,51 +158,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
       />
 
-      <div className="min-h-screen bg-background pt-32 pb-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <Breadcrumbs items={breadcrumbItems} />
-
-          <div className="mb-10">
-            <h1 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight mb-4">
-              {categoryName}
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-3xl mb-2">
-              {meta?.intro ||
-                `Explore our curated selection of ${categoryName} items. Whether you're looking for durability, style, or performance, find exactly what you need from our top-rated selection.`}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {categoryProducts.length} product{categoryProducts.length !== 1 ? "s" : ""} available
-              {" · "}
-              Prices sourced from Flipkart
-              {" · "}
-              Last checked {new Date().toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric" })}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6 lg:gap-8 mb-16">
-            {categoryProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {/* FAQ Section — visible content matching FAQPage schema */}
-          <div className="mt-20 border-t pt-12">
-            <h2 className="text-2xl font-bold mb-8">
-              Frequently Asked Questions about {categoryName}
-            </h2>
-            <div className="space-y-8 max-w-3xl">
-              {faqs.map((faq, idx) => (
-                <div key={idx}>
-                  <h3 className="text-lg font-semibold mb-2">{faq.question}</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {faq.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
+      <CategoryClientView
+        categoryName={categoryName}
+        categoryProducts={categoryProducts}
+        intro={meta?.intro}
+        faqs={faqs}
+      />
     </>
   );
 }

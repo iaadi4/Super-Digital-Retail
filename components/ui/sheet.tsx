@@ -16,7 +16,13 @@ function SheetTrigger({ ...props }: SheetPrimitive.Trigger.Props) {
 }
 
 function SheetClose({ ...props }: SheetPrimitive.Close.Props) {
-  return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
+  return (
+    <SheetPrimitive.Close
+      data-slot="sheet-close"
+      nativeButton={props.render && !("nativeButton" in props) ? false : undefined}
+      {...props}
+    />
+  )
 }
 
 function SheetPortal({ ...props }: SheetPrimitive.Portal.Props) {

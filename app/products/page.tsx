@@ -14,24 +14,15 @@ export const metadata: Metadata = {
 };
 
 export default function ProductsPage() {
-  const breadcrumbItems = [{ label: "All Products" }];
+  const breadcrumbItems = [
+    { label: "Products", href: "/products" },
+    { label: "All" },
+  ];
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-24">
-      <div className="container mx-auto px-4 md:px-6">
+    <div className="min-h-screen bg-[#FFFFFF] pt-12 pb-24 font-body">
+      <div className="container mx-auto px-4 md:px-8">
         <Breadcrumbs items={breadcrumbItems} />
-
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-heading font-extrabold tracking-tight mb-2">
-              All Products
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Discover {products.length} curated products across {getActiveCategories().length} categories.
-            </p>
-          </div>
-        </div>
-
         <ProductsClientView />
       </div>
     </div>

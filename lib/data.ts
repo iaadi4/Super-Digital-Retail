@@ -36,7 +36,7 @@ export const products: Product[] = [
   {
     id: "1",
     title: "Sapra Chopper to Chop and Cut Fruits, Vegetables(PACK OF 1) Vegetable & Fruit Chopper",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=0",
     originalPrice: 999,
     salePrice: 237,
@@ -53,7 +53,7 @@ export const products: Product[] = [
   {
     id: "2",
     title: "DS99 KT-125 Dynamic Thunder Sound With High Bass & Mobile Stand 10 W Bluetooth Speaker",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=1",
     originalPrice: 2699,
     salePrice: 389,
@@ -70,7 +70,7 @@ export const products: Product[] = [
   {
     id: "3",
     title: "DS99 High Power Sound Blast, Mini, Thunder Sound Wireless Bluetooth",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=2",
     originalPrice: 1999,
     salePrice: 297,
@@ -87,7 +87,7 @@ export const products: Product[] = [
   {
     id: "4",
     title: "ZEBRONICS 4 Port ZEB-90HB USB Hub",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=3",
     originalPrice: 1999,
     salePrice: 198,
@@ -104,7 +104,7 @@ export const products: Product[] = [
   {
     id: "5",
     title: "sdt Decorative Showpiece - 13 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=4",
     originalPrice: 1099,
     salePrice: 132,
@@ -121,7 +121,7 @@ export const products: Product[] = [
   {
     id: "6",
     title: "SPKR Couple Legs hanging statue gift for Girlfriend /boyfriend Decorative Showpiece - 5 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=5",
     originalPrice: 2499,
     salePrice: 539,
@@ -138,7 +138,7 @@ export const products: Product[] = [
   {
     id: "7",
     title: "Shilp Saga Lord Ganesha Idol on Decorative Handcrafted Plate for Home and Car - 20 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=6",
     originalPrice: 1999,
     salePrice: 235,
@@ -155,7 +155,7 @@ export const products: Product[] = [
   {
     id: "8",
     title: "SPKR Ganesha Idol, Vinayaka Statue, Ganpati Decorative Statue Showpiece - 3 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=7",
     originalPrice: 999,
     salePrice: 175,
@@ -172,7 +172,7 @@ export const products: Product[] = [
   {
     id: "9",
     title: "SDR Front & Back Case for Airpods 1/2 Dots Protective Cover",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=8",
     originalPrice: 999,
     salePrice: 353,
@@ -189,7 +189,7 @@ export const products: Product[] = [
   {
     id: "10",
     title: "Sapra LCD Writing Screen Tablet Drawing Board for Kids/Adults, 8.5 Inch",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=9",
     originalPrice: 4800,
     salePrice: 150,
@@ -206,7 +206,7 @@ export const products: Product[] = [
   {
     id: "11",
     title: "Tejash enterprises Dream Catcher Wall Hanging blue 25 cm Feather",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=10",
     originalPrice: 825,
     salePrice: 140,
@@ -223,7 +223,7 @@ export const products: Product[] = [
   {
     id: "12",
     title: "Sapra Lord Buddha Statue Sculpture Home Decor Showpiece - 29 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=11",
     originalPrice: 1999,
     salePrice: 425,
@@ -240,7 +240,7 @@ export const products: Product[] = [
   {
     id: "13",
     title: "ZEBRONICS USB Type C Cable 2 A 1 m ZEB-TT20V",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=12",
     originalPrice: 999,
     salePrice: 249,
@@ -257,7 +257,7 @@ export const products: Product[] = [
   {
     id: "14",
     title: "DS99 TG 113 5 W Bluetooth Speaker",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=13",
     originalPrice: 2399,
     salePrice: 360,
@@ -274,7 +274,7 @@ export const products: Product[] = [
   {
     id: "15",
     title: "curious lifestyle Meditating Sitting Buddha Statue Home Decor - 25.4 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=14",
     originalPrice: 1299,
     salePrice: 144,
@@ -291,7 +291,7 @@ export const products: Product[] = [
   {
     id: "16",
     title: "Sapra Lord Ganesha Decorated by Stone with Wooden Base - 13.5 cm",
-    brandName: "Flipkart Seller",
+    brandName: "Super Digital Retail",
     brandLogo: "https://i.pravatar.cc/150?u=15",
     originalPrice: 999,
     salePrice: 261,
@@ -364,7 +364,7 @@ export type CategoryMeta = {
 export const categoryMeta: Record<string, CategoryMeta> = {
   Electronics: {
     intro:
-      "From Bluetooth speakers and USB hubs to writing tablets and cables — our Electronics collection brings you everyday tech essentials at steep discounts. Each product is sourced from trusted Flipkart sellers so you can compare specs, read real ratings, and buy with confidence.",
+      "From Bluetooth speakers and USB hubs to writing tablets and cables — our Electronics collection brings you everyday tech essentials at steep discounts. Each product is crafted and sold directly by Super Digital Retail on Flipkart with guaranteed quality and fast delivery.",
     faqs: [
       {
         question: "Are these electronics covered by warranty?",
@@ -390,7 +390,7 @@ export const categoryMeta: Record<string, CategoryMeta> = {
       {
         question: "Are the showpieces fragile? How are they packaged?",
         answer:
-          "Sellers on Flipkart use bubble wrap and corrugated packaging for fragile items. If an item arrives damaged, you can request a replacement through Flipkart's return policy.",
+          "We ensure secure bubble wrap and corrugated packaging for all our fragile items. If an item arrives damaged, you can easily request a replacement through Flipkart's return policy.",
       },
       {
         question: "What materials are the home decor items made from?",

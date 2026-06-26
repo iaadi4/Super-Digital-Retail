@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   
   // Vary description structure based on product characteristics
   const descTemplates = [
-    `Get the ${product.title} at ₹${product.salePrice.toLocaleString()}${discount > 0 ? ` (${discount}% off)` : ''} in our ${product.category} collection.${ratingInfo} Compare and buy via Flipkart.`,
+    `Get the ${product.title} at ₹${product.salePrice.toLocaleString()}${discount > 0 ? ` (${discount}% off)` : ''} in our ${product.category} collection.${ratingInfo} Buy official Super Digital Retail products via Flipkart.`,
     `${product.title} by ${product.brandName} — now ₹${product.salePrice.toLocaleString()}${discount > 0 ? `, down from ₹${product.originalPrice.toLocaleString()}` : ''}.${ratingInfo} Shop on Flipkart.`,
     `Explore the ${product.title} for just ₹${product.salePrice.toLocaleString()}.${ratingInfo} Part of our curated ${product.category} picks. Buy on Flipkart.`,
   ];
@@ -97,7 +97,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       availability: "https://schema.org/InStock",
       seller: {
         "@type": "Organization",
-        name: "Flipkart",
+        name: "Super Digital Retail",
       },
     },
   };

@@ -2,81 +2,93 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ShoppingCart, Heart } from "lucide-react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Product, getProductSlug } from "@/lib/data";
 
 interface ProductCardProps {
   product: Product;
 }
 
+function formatReviewsCount(count: number): string {
+  if (count >= 1000) {
+    return (count / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  }
+  return count.toString();
+}
+
 export function ProductCard({ product }: ProductCardProps) {
+  const shouldReduceMotion = useReducedMotion();
+
+  const discountPercentage =
+    product.originalPrice > product.salePrice
+      ? Math.round(((product.originalPrice - product.salePrice) / product.originalPrice) * 100)
+      : 0;
+
   return (
     <motion.div
-      whileHover={{ y: -8, scale: 1.03 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="group flex flex-col rounded-3xl bg-card border border-border shadow-sm hover:shadow-2xl hover:shadow-primary/10 overflow-hidden relative transition-shadow duration-300"
+      initial={{ opacity: shouldReduceMotion ? 1 : 0, y: shouldReduceMotion ? 0 : 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={shouldReduceMotion ? {} : { y: -4 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+      className="group flex flex-col bg-[#FFFFFF] rounded-[20px] overflow-hidden font-body relative"
     >
-      <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-0" />
-      
-      <Link href={`/products/${getProductSlug(product)}`} className="absolute inset-0 z-10">
+      <Link href={`/products/${getProductSlug(product)}`} className="absolute inset-0 z-20">
         <span className="sr-only">View {product.title}</span>
       </Link>
-      
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted/20">
+
+      {/* Image Area */}
+      <div className="relative aspect-square w-full bg-[#F7F9F8] rounded-[20px] overflow-hidden p-3">
         <Image
           src={product.imageUrl}
           alt={product.title}
           fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover mix-blend-multiply dark:mix-blend-normal transition-transform duration-700 group-hover:scale-110"
+          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          className="object-contain p-3 transition-transform duration-500 ease-in-out group-hover:scale-[1.08]"
         />
+
+        {/* Discount Badge */}
+        {discountPercentage > 0 && (
+          <div className="absolute top-3 left-3 z-10 rounded-full bg-[#111111] text-white text-[11px] font-medium px-2.5 py-0.5 pointer-events-none">
+            −{discountPercentage}%
+          </div>
+        )}
       </div>
 
-      <div className="p-3 sm:p-5 flex flex-col flex-1 relative z-20 pointer-events-none">
+      {/* Body */}
+      <div className="pt-4 pb-2 px-1 flex flex-col flex-1 pointer-events-none">
+        {/* Brand / Category */}
+        <span className="text-[11px] uppercase tracking-wider text-[#7A7A7A] font-body block mb-1">
+          {product.category}
+        </span>
 
-
-        <h3 className="font-heading font-semibold text-sm sm:text-base text-foreground line-clamp-2 mb-2">
+        {/* Title */}
+        <h3 className="text-[14px] font-medium text-[#111111] line-clamp-2 leading-snug mb-2">
           {product.title}
         </h3>
 
         <div className="mt-auto">
-          <div className="flex flex-wrap items-baseline gap-1 sm:gap-2 mb-2 sm:mb-3">
-            <span className="text-base sm:text-lg font-bold text-primary">
+          {/* Price Row */}
+          <div className="flex items-center gap-3">
+            <span className="text-[16px] font-bold text-[#111111]">
               ₹{product.salePrice.toLocaleString()}
             </span>
-            <span className="text-xs sm:text-sm text-muted-foreground line-through">
-              ₹{product.originalPrice.toLocaleString()}
-            </span>
+            {product.originalPrice > product.salePrice && (
+              <span className="text-[13px] line-through text-[#7A7A7A]">
+                ₹{product.originalPrice.toLocaleString()}
+              </span>
+            )}
           </div>
 
-          <div className="flex items-center justify-between pointer-events-auto">
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-              {product.reviewsCount > 0 ? (
-                <>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-3 sm:h-3.5 w-3 sm:w-3.5 fill-primary text-primary" />
-                    <span className="text-xs font-medium text-foreground">
-                      {product.rating.toFixed(1)}
-                    </span>
-                    <span className="text-xs text-muted-foreground">
-                      ({product.reviewsCount.toLocaleString()})
-                    </span>
-                  </div>
-                  {product.soldCount > 0 && (
-                    <span className="text-xs text-muted-foreground hidden sm:inline">
-                      {product.soldCount.toLocaleString()} sold
-                    </span>
-                  )}
-                </>
-              ) : (
-                <span className="text-[10px] sm:text-xs font-medium text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                  Newly listed
-                </span>
-              )}
+          {/* Rating Row */}
+          {product.reviewsCount > 0 && (
+            <div className="flex items-center gap-1 mt-1">
+              <Star className="h-3 w-3 fill-[#111111] text-[#111111]" />
+              <span className="text-[12px] text-[#7A7A7A]">
+                {product.rating.toFixed(1)} ({formatReviewsCount(product.reviewsCount)})
+              </span>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </motion.div>

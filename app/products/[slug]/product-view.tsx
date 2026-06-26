@@ -1,169 +1,200 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { Product, getProductSlug, getCategorySlug } from "@/lib/data";
-import { Star, ShieldCheck, Truck, RefreshCcw, ExternalLink, ArrowLeft, Tag } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Product, getCategorySlug } from "@/lib/data";
+import { Star, Truck, RefreshCcw } from "lucide-react";
 import { ProductGallery } from "./product-gallery";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Breadcrumbs } from "@/components/landing/breadcrumbs";
 import { ProductCard } from "@/components/landing/product-card";
 
-export function ProductView({ product, relatedProducts }: { product: Product; relatedProducts: Product[] }) {
+function formatReviewsCount(count: number): string {
+  if (count >= 1000) {
+    return (count / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  }
+  return count.toString();
+}
+
+export function ProductView({
+  product,
+  relatedProducts,
+}: {
+  product: Product;
+  relatedProducts: Product[];
+}) {
   const allImages = [product.imageUrl, ...(product.additionalImages || [])];
+  const shouldReduceMotion = useReducedMotion();
 
   const stagger = {
     animate: {
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: shouldReduceMotion ? 0 : 0.1,
+      },
+    },
   };
 
   const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } }
-  };
-
-  const scaleIn = {
-    initial: { opacity: 0, scale: 0.95 },
-    animate: { opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } }
+    initial: {
+      opacity: shouldReduceMotion ? 1 : 0,
+      y: shouldReduceMotion ? 0 : 20,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: shouldReduceMotion ? 0 : 0.45,
+        ease: [0.22, 1, 0.36, 1] as const,
+      },
+    },
   };
 
   const breadcrumbItems = [
     { label: "Products", href: "/products" },
-    { label: product.category, href: `/category/${getCategorySlug(product.category)}` },
+    {
+      label: product.category,
+      href: `/category/${getCategorySlug(product.category)}`,
+    },
     { label: product.title },
   ];
 
+  const savings =
+    product.originalPrice > product.salePrice ? product.originalPrice - product.salePrice : 0;
+
   return (
-    <div className="min-h-screen bg-background pt-24 pb-24">
-      <motion.div 
+    <div className="min-h-screen bg-[#FFFFFF] py-24 md:py-32 font-body">
+      <motion.div
         initial="initial"
         animate="animate"
         variants={stagger}
-        className="container mx-auto px-4 max-w-6xl"
+        className="container mx-auto px-4 md:px-8 max-w-6xl"
       >
         <motion.div variants={fadeInUp}>
           <Breadcrumbs items={breadcrumbItems} />
         </motion.div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Gallery Section */}
-          <motion.div variants={scaleIn} className="w-full lg:sticky lg:top-32 h-fit">
+          {/* Gallery Column */}
+          <div className="w-full lg:sticky lg:top-32 h-fit">
             <ProductGallery images={allImages} title={product.title} />
-          </motion.div>
+          </div>
 
-          {/* Details Section */}
-          <motion.div variants={stagger} className="flex flex-col">
-            <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 mb-5">
-
-              {product.reviewsCount > 0 ? (
-                <div className="flex items-center gap-1.5 bg-secondary/50 px-3 py-1.5 rounded-full border border-border">
-                  <Star className="h-4 w-4 fill-primary text-primary" />
-                  <span className="text-sm font-bold">{product.rating.toFixed(1)}</span>
-                  <span className="text-sm text-muted-foreground">
-                    ({product.reviewsCount.toLocaleString()} reviews)
-                  </span>
-                </div>
-              ) : (
-                <div className="flex items-center gap-1.5 bg-primary/10 px-3 py-1.5 rounded-full border border-primary/20">
-                  <Tag className="h-4 w-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Newly listed</span>
-                </div>
-              )}
-              {product.soldCount > 0 && (
-                <div className="text-sm font-medium text-muted-foreground ml-auto bg-muted/30 px-3 py-1.5 rounded-full border border-border">
-                  {product.soldCount.toLocaleString()} sold
-                </div>
-              )}
+          {/* Details Column */}
+          <motion.div variants={stagger} className="flex flex-col items-start">
+            {/* Breadcrumb Pill */}
+            <motion.div variants={fadeInUp}>
+              <Link
+                href={`/category/${getCategorySlug(product.category)}`}
+                className="inline-block text-[11px] uppercase tracking-widest bg-[#F7F9F8] px-3 py-1 rounded-full text-[#7A7A7A] mb-4 hover:text-[#111111] transition-colors"
+              >
+                {product.category}
+              </Link>
             </motion.div>
 
-            <motion.h1 variants={fadeInUp} className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-foreground mb-6 leading-tight">
+            {/* Title */}
+            <motion.h1
+              variants={fadeInUp}
+              className="font-display text-[40px] font-bold text-[#111111] leading-tight mb-3 w-full"
+            >
               {product.title}
             </motion.h1>
 
-            <motion.div variants={fadeInUp} className="flex items-end gap-4 mb-2 pb-2">
-              <span className="text-4xl lg:text-5xl font-bold text-primary">
+            {/* Rating Chip */}
+            <motion.div variants={fadeInUp} className="flex items-center gap-2 mb-6">
+              {product.reviewsCount > 0 ? (
+                <div className="flex items-center gap-1">
+                  <Star className="h-3.5 w-3.5 fill-[#111111] text-[#111111]" />
+                  <span className="text-[13px] font-medium text-[#111111]">
+                    {product.rating.toFixed(1)}
+                  </span>
+                  <span className="text-[13px] text-[#7A7A7A]">
+                    ({formatReviewsCount(product.reviewsCount)} reviews)
+                  </span>
+                </div>
+              ) : (
+                <span className="text-[12px] font-medium text-[#111111] bg-[#F7F9F8] px-2.5 py-0.5 rounded-full">
+                  Newly listed
+                </span>
+              )}
+              {product.soldCount > 0 && (
+                <span className="text-[12px] text-[#7A7A7A]">
+                  · {product.soldCount}+ sold
+                </span>
+              )}
+            </motion.div>
+
+            {/* Price Row */}
+            <motion.div variants={fadeInUp} className="flex items-baseline gap-3 mb-8">
+              <span className="text-[32px] font-bold text-[#111111]">
                 ₹{product.salePrice.toLocaleString()}
               </span>
               {product.originalPrice > product.salePrice && (
-                <span className="text-xl text-muted-foreground line-through mb-1.5">
+                <span className="text-[20px] line-through text-[#7A7A7A]">
                   ₹{product.originalPrice.toLocaleString()}
                 </span>
               )}
-              {product.originalPrice > product.salePrice && (
-                <span className="mb-2 ml-2 px-3 py-1 text-sm font-bold bg-destructive/10 text-destructive rounded-full">
-                  Save ₹{((product.originalPrice - product.salePrice)).toLocaleString()}
+              {savings > 0 && (
+                <span className="rounded-full bg-[#F0F0F0] text-[#111111] text-[12px] font-medium px-3 py-1 ml-1">
+                  Save ₹{savings.toLocaleString()}
                 </span>
               )}
             </motion.div>
-            <motion.div variants={fadeInUp} className="text-xs text-muted-foreground mb-6 pb-6 border-b border-border">
-              Price last checked: {new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })}
-            </motion.div>
 
-            <motion.div variants={fadeInUp} className="mb-10">
-              <h2 className="text-xl font-semibold mb-4 text-foreground">Description</h2>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                {product.description || "Premium product crafted with the finest materials to deliver exceptional performance and style."}
+            {/* Description */}
+            <motion.div variants={fadeInUp} className="mb-8 pb-8 border-b border-[#E0E0E0] w-full">
+              <p className="text-[15px] text-[#7A7A7A] leading-relaxed">
+                {product.description ||
+                  "Premium product crafted with high quality materials for daily reliability and refined aesthetics."}
               </p>
             </motion.div>
 
+            {/* Features */}
             {product.features && product.features.length > 0 && (
-              <motion.div variants={fadeInUp} className="mb-12">
-                <h2 className="text-xl font-semibold mb-5 text-foreground">Key Features</h2>
-                <ul className="space-y-4">
+              <motion.div variants={fadeInUp} className="mb-8 w-full">
+                <h2 className="text-[14px] font-medium text-[#111111] uppercase tracking-wider mb-3">
+                  Key Specifications
+                </h2>
+                <ul className="space-y-2">
                   {product.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <div className="mt-1 bg-primary/10 p-1.5 rounded-full shrink-0">
-                        <ShieldCheck className="h-4 w-4 text-primary" />
-                      </div>
-                      <span className="text-muted-foreground text-lg">{feature}</span>
+                    <li key={idx} className="text-[14px] text-[#7A7A7A] flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#111111]" />
+                      {feature}
                     </li>
                   ))}
                 </ul>
               </motion.div>
             )}
 
-            <motion.div variants={fadeInUp} className="flex flex-col gap-3 mt-auto">
+            {/* CTA */}
+            <motion.div variants={fadeInUp} className="w-full mt-2">
               {product.flipkartUrl && (
-                <>
-                  <a 
-                    href={product.flipkartUrl} 
-                    target="_blank" 
-                    rel="nofollow sponsored noopener"
-                    className={cn(
-                      buttonVariants({ variant: "default", size: "lg" }),
-                      "w-full h-14 text-lg rounded-2xl bg-[#2874f0] text-white hover:bg-[#2874f0]/95 transition-all shadow-lg hover:shadow-xl relative overflow-hidden group"
-                    )}
-                  >
-                    <span className="absolute inset-0 w-full h-full bg-white/20 -translate-x-full skew-x-12 group-hover:animate-[shimmer_1.5s_infinite]"></span>
-                    Buy on Flipkart
-                    <ExternalLink className="ml-2 h-5 w-5" />
-                  </a>
-                </>
+                <a
+                  href={product.flipkartUrl}
+                  target="_blank"
+                  rel="nofollow sponsored noopener"
+                  className="w-full rounded-full h-14 bg-[#111111] text-white flex items-center justify-center text-[16px] font-medium hover:bg-[#333333] transition-colors cursor-pointer"
+                >
+                  Buy on Flipkart
+                </a>
               )}
             </motion.div>
 
-            <motion.div variants={fadeInUp} className="grid grid-cols-2 gap-4 mt-8 p-6 bg-card rounded-3xl border border-border shadow-sm">
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-2xl">
-                  <Truck className="h-6 w-6 text-primary" />
-                </div>
+            {/* Trust Strip */}
+            <motion.div
+              variants={fadeInUp}
+              className="grid grid-cols-2 gap-4 w-full pt-6 mt-6 border-t border-[#E0E0E0]"
+            >
+              <div className="flex items-center gap-3">
+                <Truck className="h-5 w-5 text-[#111111] shrink-0" />
                 <div>
-                  <div className="font-semibold">Free Delivery</div>
-                  <div className="text-xs text-muted-foreground">Via Flipkart</div>
+                  <div className="text-[14px] font-medium text-[#111111]">Free Delivery</div>
+                  <div className="text-[12px] text-[#7A7A7A]">Orders over ₹500</div>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="bg-primary/10 p-3 rounded-2xl">
-                  <RefreshCcw className="h-6 w-6 text-primary" />
-                </div>
+              <div className="flex items-center gap-3">
+                <RefreshCcw className="h-5 w-5 text-[#111111] shrink-0" />
                 <div>
-                  <div className="font-semibold">Easy Returns</div>
-                  <div className="text-xs text-muted-foreground">Via Flipkart policy</div>
+                  <div className="text-[14px] font-medium text-[#111111]">Easy Returns</div>
+                  <div className="text-[12px] text-[#7A7A7A]">Flipkart policy</div>
                 </div>
               </div>
             </motion.div>
@@ -172,30 +203,21 @@ export function ProductView({ product, relatedProducts }: { product: Product; re
 
         {/* Related Products */}
         {relatedProducts.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mt-20 pt-12 border-t border-border"
-          >
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-2xl font-heading font-bold mb-2">More in {product.category}</h2>
-                <p className="text-muted-foreground">Explore similar products you might like</p>
-              </div>
-              <Link
-                href={`/category/${getCategorySlug(product.category)}`}
-                className="text-sm font-medium text-primary hover:underline hidden sm:block"
-              >
-                View all →
-              </Link>
+          <div className="mt-24 pt-16 border-t border-[#E0E0E0]">
+            <div className="mb-10">
+              <span className="text-[11px] uppercase tracking-widest text-[#7A7A7A] block mb-2">
+                MORE ITEMS
+              </span>
+              <h2 className="text-2xl md:text-3xl font-bold text-[#111111]">
+                You May Also Like
+              </h2>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
               {relatedProducts.map((p) => (
                 <ProductCard key={p.id} product={p} />
               ))}
             </div>
-          </motion.div>
+          </div>
         )}
       </motion.div>
     </div>

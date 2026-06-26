@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
-import { Inter, Sora } from "next/font/google";
+import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/landing/navbar";
 import { Footer } from "@/components/landing/footer";
 
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-cormorant",
+  display: "swap",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-dm",
+  display: "swap",
+});
+
 export const dynamic = "force-dynamic";
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-heading",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://superdigitalretail.in"),
@@ -42,16 +46,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} ${sora.variable} font-sans min-h-screen flex flex-col antialiased`}>
+    <html lang="en" suppressHydrationWarning className={`${cormorant.variable} ${dmSans.variable}`}>
+      <body className="font-body min-h-screen flex flex-col antialiased bg-[#FFFFFF] text-[#111111]">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="flex-1 flex flex-col">
+          <main className="flex-1 flex flex-col pt-[100px]">
             {children}
           </main>
           <Footer />
